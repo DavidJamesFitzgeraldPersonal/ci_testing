@@ -2,7 +2,7 @@ name: Ensure the PR template has been modified
 
 on:
   pull_request:
-    types: [edited, ready-for-review]
+    types: [edited, synchronize, ready_for_review]
     branches: [ "main" ]
 
 jobs:
