@@ -31,6 +31,6 @@ jobs:
       run: |
         python -m unittest discover -s tests -p '*.py'
 
-    #- name: Verify PR Template is filled out
-      #uses: foursquare/pr-template-fillout-verifier@v1.0.2
+    - name: Verify PR Template is filled out
+      uses: foursquare/pr-template-fillout-verifier@v1.0.2
 
