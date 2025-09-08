@@ -2,10 +2,10 @@ name: Ensure the PR template has been modified
 
 on:
   workflow_dispatch: # This must be run manually
-  inputs:
-      pr_branch:
-        description: 'PR branch to run check on'
-        required: true
+    inputs:
+        pr_branch:
+          description: 'PR branch to run check on'
+          required: true
 
 jobs:
   check-pr-template:
