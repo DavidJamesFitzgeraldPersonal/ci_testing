@@ -1,19 +1,17 @@
 name: Ensure the PR template has been modified
 
 on:
-  pull_request:
-    types: [edited, synchronize, ready_for_review]
-    branches: [ "main" ]
+  workflow_dispatch: # This must be run manually
+  inputs:
+      pr_branch:
+        description: 'PR branch to run check on'
+        required: true
 
 jobs:
-  build:
+  check-pr-template:
+      name: PR Template Verification
+      runs-on: ubuntu-latest
 
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11"]
-
-    steps:
-    - name: Verify PR Template is filled out
-      uses: foursquare/pr-template-fillout-verifier@v1.0.2
+      steps:
+        - name: Verify PR Template is filled out
+          uses: foursquare/pr-template-fillout-verifier@v1.0.2
