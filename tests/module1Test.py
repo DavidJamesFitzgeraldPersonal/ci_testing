@@ -10,10 +10,10 @@ class TestModule1(unittest.TestCase):
 		print("doing teardown")
 
 	def testTruePass(self):
-		self.uut.assertEqual(uut.returnsTrue(), True)
+		self.assertEqual(self.uut.returnsTrue(), True)
 
 	def testFalsePass(self):
-		self.uut.assertEqual(uut.returnsFalse(), False)
+		self.assertEqual(self.uut.returnsFalse(), False)
 
 if __name__ == '__main__':
     unittest.main()
