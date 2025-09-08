@@ -14,7 +14,7 @@ class TestModule1(unittest.TestCase):
 
 	def testFalsePass(self):
 		uut = module1.module1()
-		self.assertEqual(uut.returnsFalse(), False)
+		self.assertEqual(uut.returnsFalse(), True)
 
 if __name__ == '__main__':
     unittest.main()
