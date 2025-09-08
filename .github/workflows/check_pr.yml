@@ -27,10 +27,12 @@ jobs:
 
     - name: Validate PR template
       uses: actions/github-script@v7
+      env:
+        PR_NUMBER: ${{ steps.find_pr.outputs.pr_number }}
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber = Number(inputs.pr_number);
+          const prNumber = Number(process.env.PR_NUMBER);
 
           if (!Number.isInteger(prNumber) || prNumber <= 0) {
             core.setFailed("❌ Invalid PR number.");
@@ -70,5 +72,3 @@ jobs:
           } else {
             console.log("✅ PR template looks complete.");
           }
-        inputs:
-          pr_number: ${{ steps.find_pr.outputs.pr_number }}
