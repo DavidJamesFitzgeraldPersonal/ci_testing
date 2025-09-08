@@ -12,15 +12,14 @@ class TestModule1(unittest.TestCase):
 	# GIVEN
 	# WHEN
 	# THEN
-	def testTruePass(self):
+	def testExpectTrue(self):
 		self.assertEqual(self.uut.returnsTrue(), True)
 
 	# GIVEN
 	# WHEN
 	# THEN
-	def testFalsePass(self):
-		self.assertEqual(self.uut.returnsFalse(), False)
+	def testExpectFalse(self):
+		self.assertEqual(self.uut.returnsFalse(), True)
 
 if __name__ == '__main__':
     unittest.main()
-    
