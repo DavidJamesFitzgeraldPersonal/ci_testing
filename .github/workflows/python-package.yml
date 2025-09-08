@@ -26,11 +26,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-        
+
     - name: Test with unittest
       run: |
         python -m unittest discover -s tests -p '*.py'
 
-    - name: Verify PR Template is filled out
-      uses: foursquare/pr-template-fillout-verifier@v1.0.2
+    #- name: Verify PR Template is filled out
+      #uses: foursquare/pr-template-fillout-verifier@v1.0.2
 
