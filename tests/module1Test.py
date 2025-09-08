@@ -9,15 +9,15 @@ class TestModule1(unittest.TestCase):
 	def tearDown(self):
 		print("doing teardown")
 
-	# GIVEN
-	# WHEN
-	# THEN
+	# GIVEN some state
+	# WHEN that state changes
+	# THEN something happens and is checked
 	def testTruePass(self):
 		self.assertEqual(self.uut.returnsTrue(), True)
 
-	# GIVEN
-	# WHEN
-	# THEN
+	# GIVEN some state
+	# WHEN that state changes
+	# THEN something happens and is checked
 	def testFalsePass(self):
 		self.assertEqual(self.uut.returnsFalse(), False)
 
