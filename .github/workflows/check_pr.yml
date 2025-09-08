@@ -1,11 +1,16 @@
 name: Ensure the PR template has been modified
 
 on:
+  # Automatically run on PR events so GitHub can report status to the PR
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+  # Also support manual triggering
   workflow_dispatch:
     inputs:
       pr_number:
-        description: 'PR number to run check on'
-        required: true
+        description: 'PR number to run check on (only needed for manual runs)'
+        required: false
 
 jobs:
   check-pr-template:
@@ -13,14 +18,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Get PR body and validate it
+    - name: Determine PR number
+      id: find_pr
+      run: |
+        if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "PR_NUM=${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
+        else
+          echo "PR_NUM=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Validate PR template
       uses: actions/github-script@v7
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const prNumber = Number('${{ inputs.pr_number }}');
+          const prNumber = Number('${{ steps.find_pr.outputs.PR_NUM }}');
 
-          if (!prNumber || isNaN(prNumber)) {
+          if (!Number.isInteger(prNumber) || prNumber <= 0) {
             core.setFailed("❌ Invalid PR number.");
             return;
           }
@@ -39,22 +53,4 @@ jobs:
           }
 
           const incompleteMarkers = [
-            "<!-- Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->",
-            "<!-- Jira task num -->",
-            "<!-- Please describe the tests that you ran to verify your changes. Provide reproducible instructions. Please also list any relevant details for your test configuration. -->",
-            "- [ ] My code follows the style guidelines of this project",
-            "- [ ] I have performed a self-review of my own code",
-            "- [ ] I have commented my code, particularly in hard-to-understand areas",
-            "- [ ] I have made corresponding changes to the documentation",
-            "- [ ] My changes generate no new warnings",
-            "- [ ] I have added tests that prove my fix is effective or that my feature works",
-            "- [ ] Any dependent changes have been merged and published in downstream modules"
-          ];
-
-          const missingSections = incompleteMarkers.filter(marker => body.includes(marker));
-
-          if (missingSections.length > 0) {
-            core.setFailed(`❌ PR template is incomplete. Please address the following:\n${missingSections.join('\n')}`);
-          } else {
-            console.log("✅ PR template looks complete.");
-          }
+            "<!-- Please include a summary of the change and which issue is fixed. Please also include relevant motivation
