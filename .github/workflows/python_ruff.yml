@@ -40,6 +40,6 @@ jobs:
         git config --global user.email "github-actions@github.com"
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
         git add .
-        git commit -m "Apply Ruff formatting" || echo "No changes to commit"
+        git commit -m "WORKFLOW COMMIT - Apply Ruff formatting" || echo "WORKFLOW COMMIT - No changes to commit"
         git push
 
